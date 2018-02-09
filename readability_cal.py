@@ -33,6 +33,11 @@ flesch_kincaid_readability_processed = 0
 
 
 def get_replacement(sent):
+    """
+    replace sentence with correct words
+    :param sent:
+    :return:
+    """
     sent = sent.split()
     res = []
     for word in sent:
@@ -44,6 +49,12 @@ def get_replacement(sent):
 
 
 def get_lexical_replacement(sent, parse_info):
+    """
+    replace sentence with correct words according to the parse info
+    :param sent:
+    :param parse_info:
+    :return:
+    """
     for lexical in repl_dict:
         try:
             position = sent.split().index(lexical.split()[0])
@@ -82,26 +93,27 @@ def get_lexical_replacement(sent, parse_info):
     return sent
 
 
-line_count = 0
-parse_list = pickle.load(open(parse_result, "rb"))
-with open("replaced.txt", "w", encoding="utf8") as writer:
-    with open(file_name, "r", encoding="utf8") as fp:
-        for line in fp:
-            # if line_count == 500:
-            #     break
-            automatic_readability_index += textstat.automated_readability_index(line)
-            flesch_kincaid_readability += textstat.dale_chall_readability_score(line)
-            replaced = get_lexical_replacement(line, parse_list[line_count])
-            writer.write(replaced)
-            writer.write("\n")
-            automatic_readability_index_processed += textstat.automated_readability_index(replaced)
-            flesch_kincaid_readability_processed += textstat.dale_chall_readability_score(replaced)
-            line_count += 1
-automatic_readability_index_avg_score = automatic_readability_index / line_count
-flesch_kincaid_readability_avg_score = flesch_kincaid_readability / line_count
-automatic_readability_index_processed_avg_score = automatic_readability_index_processed / line_count
-flesch_kincaid_readability_processed_avg_score = flesch_kincaid_readability_processed / line_count
-print(automatic_readability_index_avg_score)
-print(flesch_kincaid_readability_avg_score)
-print(automatic_readability_index_processed_avg_score)
-print(flesch_kincaid_readability_processed_avg_score)
+if __name__ == "__main__":
+    line_count = 0
+    parse_list = pickle.load(open(parse_result, "rb"))
+    with open("replaced.txt", "w", encoding="utf8") as writer:
+        with open(file_name, "r", encoding="utf8") as fp:
+            for line in fp:
+                # if line_count == 500:
+                #     break
+                automatic_readability_index += textstat.automated_readability_index(line)
+                flesch_kincaid_readability += textstat.dale_chall_readability_score(line)
+                replaced = get_lexical_replacement(line, parse_list[line_count])
+                writer.write(replaced)
+                writer.write("\n")
+                automatic_readability_index_processed += textstat.automated_readability_index(replaced)
+                flesch_kincaid_readability_processed += textstat.dale_chall_readability_score(replaced)
+                line_count += 1
+    automatic_readability_index_avg_score = automatic_readability_index / line_count
+    flesch_kincaid_readability_avg_score = flesch_kincaid_readability / line_count
+    automatic_readability_index_processed_avg_score = automatic_readability_index_processed / line_count
+    flesch_kincaid_readability_processed_avg_score = flesch_kincaid_readability_processed / line_count
+    print(automatic_readability_index_avg_score)
+    print(flesch_kincaid_readability_avg_score)
+    print(automatic_readability_index_processed_avg_score)
+    print(flesch_kincaid_readability_processed_avg_score)

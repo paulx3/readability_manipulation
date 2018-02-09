@@ -32,6 +32,12 @@ in correct form becomes a problem
     First you need to download [Simple PPDB](https://cs.brown.edu/people/epavlick/data.html) and put it under 
     project folder.
 2. 
+    Then you should run
+    
+    ``python repl_loader.py``
+    
+    to read simple ppdb and save it to a pickle file
+3. 
     ``python readability_cal.py``
     
     The program will replace words in `beam_size_4_residual.txt`
